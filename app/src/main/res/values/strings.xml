@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Torre.co Challenge</string>
+
+    <string name="click_text">click</string>
+
 </resources>

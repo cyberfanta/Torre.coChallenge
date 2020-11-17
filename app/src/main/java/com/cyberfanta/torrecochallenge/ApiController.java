@@ -21,8 +21,11 @@ public class ApiController {
     private static Request request;
     private static Response response;
 
-    private static final String PAGE_URL_1 = "https://torre.bio/api/bios/";
-//    private static final String PAGE_URL_2 = "https://torre.co/api/opportunities/";
+//    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/";
+//    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/$username";
+    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/julioleon2004";
+
+    //    private static final String PAGE_URL_2 = "https://torre.co/api/opportunities/";
 //    private static final String PAGE_URL_3 = "https://search.torre.co/opportunities/_search/";
 //    private static final String PAGE_URL_4 = "https://search.torre.co/people/_search/";
 
@@ -38,6 +41,8 @@ public class ApiController {
 
         try {
             response = CLIENT.newCall(request).execute();
+
+            Log.i(null, response.toString());
 
             String responseJSON = Objects.requireNonNull(response.body()).string();
             Objects.requireNonNull(response.body()).close();
