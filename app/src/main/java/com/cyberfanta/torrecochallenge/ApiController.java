@@ -27,9 +27,9 @@ public class ApiController {
     private static Request request;
     private static Response response;
 
-//    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/";
+    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/";
 //    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/$username";
-    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/julioleon2004";
+//    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/julioleon2004";
 
     //    private static final String PAGE_URL_2 = "https://torre.co/api/opportunities/";
 //    private static final String PAGE_URL_3 = "https://search.torre.co/opportunities/_search/";
@@ -40,8 +40,9 @@ public class ApiController {
      * Get the Pet Data from Internet and add it to a Pet List.
      */
     static int getInfo_bios(String name) {
+        String pageName = PAGE_URL_1.concat(name);
         request = new Request.Builder()
-                .url(PAGE_URL_1)
+                .url(pageName)
                 .get()
                 .build();
 

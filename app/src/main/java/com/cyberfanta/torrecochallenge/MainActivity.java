@@ -1,20 +1,14 @@
 package com.cyberfanta.torrecochallenge;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import static com.cyberfanta.torrecochallenge.ApiController.getInfo_bios;
 
@@ -34,90 +28,28 @@ public class MainActivity extends AppCompatActivity {
      * `Handler.sendMessage(msg)`
      */
     @SuppressLint("HandlerLeak")
-    private static final Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
-//            Toast.makeText(getApplicationContext(), R.string.permissionGranted, Toast.LENGTH_LONG).show();
 
-//            switch (message.what) {
-//                case CHECK_YOUR_INTERNET: {
-//                    if (!abortAllProcess) {
-//                        if (!(breedsLoaded && categoriesLoaded && imageLoaded)) {
-//                            Toast.makeText(getApplicationContext(), R.string.internet_fail, Toast.LENGTH_SHORT).show();
-//                            Toast.makeText(getApplicationContext(), R.string.retryConnection, Toast.LENGTH_SHORT).show();
-//
-//                            if (!NetworkQueryThread.isAlive()) {
-//                                NetworkQueryThread = new Thread(new NetworkQueryThread());
-//                                NetworkQueryThread.start();
-//                            }
-//                        }
-//                    }
-//
-//                    break;
-//                }
-//                case IMAGE_UPDATE: {
-//                    imageView = findViewById(R.id.petImage_iv);
-//                    imageView.getLayoutParams().width = ((Bitmap) message.obj).getWidth();
-//                    imageView.getLayoutParams().height = ((Bitmap) message.obj).getHeight();
-//                    imageView.setImageBitmap((Bitmap) message.obj);
-//
-//                    if (firstRun) {
-//                        imageView.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.image_view_second_style, null));
-//                        firstRun = false;
-//                    }
-//
-//                    button = findViewById(R.id.morePets_button);
-//                    button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_normal, null));
-//                    button.setEnabled(true);
-//                    button.setClickable(true);
-//
-//                    loadingArrow_animatorSet.pause();
-//                    imageView = findViewById(R.id.loadingArrow_iv);
-//                    imageView.setEnabled(false);
-//                    imageView.setVisibility(View.GONE);
-//
-//                    break;
-//                }
-//                case IMAGE_UPDATE_FAIL: {
-//                    button = findViewById(R.id.morePets_button);
-//                    button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_normal, null));
-//                    button.setEnabled(true);
-//                    button.setClickable(true);
-//
-//                    break;
-//                }
-//                case IMAGE_UPDATE_NOT_FOUND: {
-//                    button = findViewById(R.id.morePets_button);
-//                    button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_normal, null));
-//                    button.setEnabled(true);
-//                    button.setClickable(true);
-//
-//                    loadingArrow_animatorSet.pause();
-//                    imageView = findViewById(R.id.loadingArrow_iv);
-//                    imageView.setEnabled(false);
-//                    imageView.setVisibility(View.GONE);
-//
-//                    Toast.makeText(getApplicationContext(), R.string.petNoFound, Toast.LENGTH_SHORT).show();
-//
-//                    break;
-//                }
-//                case BREED_UPDATE: {
-//                    Spinner breeds_spinner = findViewById(R.id.breeds_spinner);
-//                    String[] breedlist = (String[]) message.obj;
-//
-//                    ArrayAdapter<String> breeds_spinner_adapter = new ArrayAdapter<>(MainActivity.this, R.layout.spinner_text_style, breedlist);
-//                    breeds_spinner.setAdapter(breeds_spinner_adapter);
-//                    break;
-//                }
-//                case CATEGORY_UPDATE: {
-//                    Spinner categories_spinner = findViewById(R.id.categories_spinner);
-//                    String[] categorylist = (String[]) message.obj;
-//
-//                    ArrayAdapter<String> breeds_spinner_adapter = new ArrayAdapter<>(MainActivity.this, R.layout.spinner_text_style, categorylist);
-//                    categories_spinner.setAdapter(breeds_spinner_adapter);
-//                    break;
-//                }
-//            }
+            switch (message.what) {
+                case NAME_EMPTY: {
+                    Toast.makeText(getApplicationContext(), R.string.NAME_EMPTY, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case PERSON_NOT_FOUND: {
+                    Toast.makeText(getApplicationContext(), R.string.PERSON_NOT_FOUND, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case PERSON_OK: {
+                    Toast.makeText(getApplicationContext(), R.string.PERSON_OK, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case FUNCTION_NOT_IMPLEMENTED: {
+                    Toast.makeText(getApplicationContext(), R.string.FUNCTION_NOT_IMPLEMENTED, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
         }
     };
 
@@ -144,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Internal class to implement a runnable object to get the JSON answers from torre.co
      */
-    private static class readJson implements Runnable {
+    private class readJson implements Runnable {
         /**
          * When an object implementing interface <code>Runnable</code> is used
          * to create a thread, starting the thread causes the object's
