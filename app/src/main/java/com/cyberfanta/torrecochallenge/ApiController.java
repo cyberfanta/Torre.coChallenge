@@ -3,8 +3,14 @@ package com.cyberfanta.torrecochallenge;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +39,7 @@ public class ApiController {
     /**
      * Get the Pet Data from Internet and add it to a Pet List.
      */
-    static void getInfo_bios() {
+    static int getInfo_bios(String name) {
         request = new Request.Builder()
                 .url(PAGE_URL_1)
                 .get()
@@ -50,8 +56,26 @@ public class ApiController {
             responseJSON = responseJSON.substring(1, responseJSON.length() - 1);
 
             Log.i(null, responseJSON);
+
+            if (responseJSON.contains("\"code\":\"020000\""))
+                return MainActivity.NAME_EMPTY;
+
+            if (responseJSON.contains("\"code\":\"011002\""))
+                return MainActivity.PERSON_NOT_FOUND;
+
+            JsonFactory factory = new JsonFactory();
+
+            ObjectMapper mapper = new ObjectMapper(factory);
+            JsonNode rootNode = mapper.readTree(responseJSON);
+
+            Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
+            while (fieldsIterator.hasNext()) {
+
+                Map.Entry<String,JsonNode> field = fieldsIterator.next();
+                System.out.println("Key: " + field.getKey() + "\tValue:" + field.getValue());
+            }
         } catch (IOException ignored) {}
+
+        return MainActivity.PERSON_OK;
     }
-
-
 }

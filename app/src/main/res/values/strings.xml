@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Torre.co Challenge</string>
 
-    <string name="click_text">click</string>
+    <string name="click_text">search</string>
+
+    <string name="username_hint">Write a username here</string>
 
 </resources>
