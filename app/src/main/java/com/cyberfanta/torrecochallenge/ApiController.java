@@ -1,22 +1,27 @@
 package com.cyberfanta.torrecochallenge;
 
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.cyberfanta.torrecochallenge.models.Links;
+import com.cyberfanta.torrecochallenge.models.Locations;
+import com.cyberfanta.torrecochallenge.models.Persons;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.cyberfanta.torrecochallenge.ProjectUtils.JSONExtractJsonElement;
+import static com.cyberfanta.torrecochallenge.ProjectUtils.JSONtoClass;
 
 public class ApiController {
     private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
@@ -35,11 +40,15 @@ public class ApiController {
 //    private static final String PAGE_URL_3 = "https://search.torre.co/opportunities/_search/";
 //    private static final String PAGE_URL_4 = "https://search.torre.co/people/_search/";
 
+    private Persons persons;
 
     /**
      * Get the Pet Data from Internet and add it to a Pet List.
      */
-    static int getInfo_bios(String name) {
+    public int getInfo_bios(String name) {
+        persons = null;
+        System.gc();
+
         String pageName = PAGE_URL_1.concat(name);
         request = new Request.Builder()
                 .url(pageName)
@@ -54,8 +63,6 @@ public class ApiController {
             String responseJSON = Objects.requireNonNull(response.body()).string();
             Objects.requireNonNull(response.body()).close();
 
-            responseJSON = responseJSON.substring(1, responseJSON.length() - 1);
-
             Log.i(null, responseJSON);
 
             if (responseJSON.contains("\"code\":\"020000\""))
@@ -64,19 +71,67 @@ public class ApiController {
             if (responseJSON.contains("\"code\":\"011002\""))
                 return MainActivity.PERSON_NOT_FOUND;
 
+            //Json Root
             JsonFactory factory = new JsonFactory();
+            ObjectMapper objectMapper = new ObjectMapper(factory);
 
-            ObjectMapper mapper = new ObjectMapper(factory);
-            JsonNode rootNode = mapper.readTree(responseJSON);
+            JsonNode jsonNode = objectMapper.readTree(responseJSON);
+            Iterator<Map.Entry<String, JsonNode>> fieldsIterator = jsonNode.fields();
+            Vector <Map.Entry<String,JsonNode>> fields = new Vector<>(0);
 
-            Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
             while (fieldsIterator.hasNext()) {
-
                 Map.Entry<String,JsonNode> field = fieldsIterator.next();
-                System.out.println("Key: " + field.getKey() + "\tValue:" + field.getValue());
+                fields.add(field); //Json Root Parsed
             }
+
+            //Object person
+            persons = JSONtoClass(fields.elementAt(0).getValue().toString(), Persons.class);
+            Log.i(null, "original json: " + fields.elementAt(0).getValue().toString());
+            Log.i(null, "person: " + persons.toString());
+
+            jsonNode = objectMapper.readTree(fields.elementAt(0).getValue().toString());
+            fieldsIterator = jsonNode.fields();
+            Vector <Map.Entry<String,JsonNode>> persons_fields = new Vector<>(0);
+
+            while (fieldsIterator.hasNext()) {
+                Map.Entry<String,JsonNode> field = fieldsIterator.next();
+//                Log.i(null, "Key: " + field.getKey() + "\tValue:" + field.getValue());
+                if (field.getKey().equals("links"))
+                    persons_fields.add(field); //Json person Parsed
+                if (field.getKey().equals("location"))
+                    persons_fields.add(field); //Json person Parsed
+            }
+
+            Locations locations = JSONtoClass(persons_fields.elementAt(1).getValue().toString(), Locations.class);
+            Log.i(null, "locations: " + locations.toString());
+            persons.setLocations(locations);
+
+            Log.i(null, "persons_fields[0]: " + persons_fields.elementAt(0).getValue().toString().substring(1, persons_fields.elementAt(0).getValue().toString().length() - 1));
+
+            String regex = "";
+            regex = regex.concat("\\},\\{");
+
+            String[] responseJSONList = persons_fields.elementAt(0).getValue().toString().substring(1, persons_fields.elementAt(0).getValue().toString().length() - 1).split(regex);
+            responseJSONList[0] = responseJSONList[0].substring(1);
+            responseJSONList[responseJSONList.length - 1] = responseJSONList[responseJSONList.length - 1].substring(0, responseJSONList[responseJSONList.length - 1].length() - 1);
+
+            for (String field: responseJSONList) {
+                Log.i(null, "field: " + field);
+                Links links = JSONtoClass("{" + field + "}", Links.class);
+                persons.addLinks(links); //Json links parsing
+                Log.i(null, "links: " + links.toString());
+            }
+
         } catch (IOException ignored) {}
 
         return MainActivity.PERSON_OK;
+    }
+
+    public Persons getPersons() {
+        return persons;
+    }
+
+    public void setPersons(Persons persons) {
+        this.persons = persons;
     }
 }

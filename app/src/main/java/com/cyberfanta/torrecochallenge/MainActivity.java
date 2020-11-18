@@ -10,9 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.cyberfanta.torrecochallenge.ApiController.getInfo_bios;
-
-
 public class MainActivity extends AppCompatActivity {
 
     public static final int NAME_EMPTY = 0;
@@ -22,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Thread QueryThread;
     private static String userName;
+
+    private ApiController apiController;
 
     /**
      * perform the action in `handleMessage` when the thread calls
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 case PERSON_OK: {
                     Toast.makeText(getApplicationContext(), R.string.PERSON_OK, Toast.LENGTH_SHORT).show();
+
                     break;
                 }
                 case FUNCTION_NOT_IMPLEMENTED: {
@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        apiController = new ApiController();
 
         QueryThread = new Thread(new readJson());
 
@@ -90,14 +92,12 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void run() {
-            int status = getInfo_bios(userName);
+            int status = apiController.getInfo_bios(userName);
 
             Message message = handler.obtainMessage();
 
             if (status == NAME_EMPTY) {
                 message.what = NAME_EMPTY;
-//                message.obj = bitmap;
-//                imageLoaded = true;
             } else if (status == PERSON_NOT_FOUND) {
                 message.what = PERSON_NOT_FOUND;
             } else if (status == PERSON_OK) {
