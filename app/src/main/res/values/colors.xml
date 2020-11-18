@@ -8,5 +8,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="verde_torre">#FFCDDC39</color>
+    <color name="white_torre">#FFF3F3F3</color>
+    <color name="black_torre">#FF27292D</color>
+    <color name="soft_black">#FF464B56</color>
+    <color name="gray_torre">#FF959698</color>
+
+    <color name="soft_black_56">#99464B56</color>
+
+    <color name="colorPrimary">@color/soft_black</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">@color/verde_torre</color>
 
 </resources>

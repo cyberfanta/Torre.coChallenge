@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">Torre.co Challenge</string>
 
-    <string name="click_text">search</string>
-
-    <string name="username_hint">Write a username here</string>
+    <string name="defaultContentDescription" translatable="false">defaultContentDescription</string>
 
     <string name="NAME_EMPTY">Username can not be empty</string>
     <string name="PERSON_NOT_FOUND">Username not found</string>
     <string name="PERSON_OK">Username info updated</string>
     <string name="FUNCTION_NOT_IMPLEMENTED">Function still not implemented</string>
 
+    <!--    button-->
+    <string name="button_text">Search</string>
+    <string name="button_hint">Write a username here</string>
 
 
 

@@ -4,35 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_torre"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/username"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:autofillHints="@string/username_hint"
-        android:ems="10"
-        android:hint="@string/username_hint"
-        android:inputType="textPersonName"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/search"
-        app:layout_constraintEnd_toStartOf="@+id/search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/search" />
-
-    <Button
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:onClick="click_1"
-        android:text="@string/click_text"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/shared_margin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="@dimen/textedit_width"
+            android:layout_height="@dimen/textedit_height"
+            android:autofillHints="@string/button_hint"
+            android:ems="10"
+            android:hint="@string/button_hint"
+            android:inputType="textPersonName"
+            android:textColor="@color/black_torre"
+            android:textColorHint="@color/black_torre"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/button_background"
+            android:onClick="click_1"
+            android:padding="0dp"
+            android:text="@string/button_text"
+            android:textAllCaps="false"
+            android:textColor="@color/verde_torre"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/shared_margin"
+        android:paddingEnd="@dimen/shared_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="@dimen/username_width"
+            android:layout_height="@dimen/username_height"
+            android:background="@drawable/username_background"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/username_padding">
+
+            <ImageView
+                android:id="@+id/usernamePhoto"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/username_picture_width"
+                android:contentDescription="@string/defaultContentDescription"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/username_padding"
+                android:layout_weight="@dimen/username_text_width"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/usernameName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/username_text_height_1"
+                    android:gravity="center"
+                    android:text="Julio César León"
+                    android:textColor="@color/white_torre"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/usernameStatement"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/username_text_height_2"
+                    android:gravity="center"
+                    android:text="Licenciado en Computación Desarrollador Java Android"
+                    android:textColor="@color/white_torre" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|center_horizontal"
+                    android:orientation="horizontal"></LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
