@@ -8,10 +8,12 @@
     <dimen name="button_width">90dp</dimen>
     <dimen name="button_height">32dp</dimen>
     <dimen name="button_stroke">1dp</dimen>
+    <dimen name="button_weight">.22</dimen>
 
     <!--    textedit-->
     <dimen name="textedit_width">281dp</dimen>
     <dimen name="textedit_height">51dp</dimen>
+    <dimen name="textedit_weight">.68</dimen>
 
     <!--    username-->
     <dimen name="username_width">371dp</dimen>

@@ -20,8 +20,9 @@
 
         <EditText
             android:id="@+id/username"
-            android:layout_width="@dimen/textedit_width"
+            android:layout_width="0dp"
             android:layout_height="@dimen/textedit_height"
+            android:layout_weight="@dimen/textedit_weight"
             android:autofillHints="@string/button_hint"
             android:ems="10"
             android:hint="@string/button_hint"
@@ -32,15 +33,16 @@
 
         <Button
             android:id="@+id/search"
-            android:layout_width="@dimen/button_width"
+            android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
+            android:layout_weight="@dimen/button_weight"
             android:background="@drawable/button_background"
             android:onClick="click_1"
             android:padding="0dp"
             android:text="@string/button_text"
             android:textAllCaps="false"
             android:textColor="@color/verde_torre"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -197,11 +199,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/shared_margin"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="@dimen/location_width_1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/location_background_1"
                     android:orientation="vertical"
                     android:padding="@dimen/username_padding"
@@ -246,7 +249,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/location_background_2"
                     android:orientation="vertical"
                     android:padding="@dimen/username_padding">
