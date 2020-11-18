@@ -12,6 +12,19 @@
     <string name="button_text">Search</string>
     <string name="button_hint">Write a username here</string>
 
+    <!--    username-->
+    <string name="username_text_1">#Name#</string>
+    <string name="username_text_2">#Carrer#</string>
 
+    <!--    objective-->
+    <string name="objective_text_1">Personal Objective</string>
+    <string name="objective_text_2">#Personal Objective#</string>
+
+    <!--    location-->
+    <string name="location_text_1">Location</string>
+    <string name="location_text_2">City:</string>
+    <string name="location_text_3">#City#</string>
+    <string name="location_text_4">Timezone:</string>
+    <string name="location_text_5">#Timezone#</string>
 
 </resources>

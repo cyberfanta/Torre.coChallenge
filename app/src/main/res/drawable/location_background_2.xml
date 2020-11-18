@@ -7,8 +7,9 @@
                 android:color="@color/soft_black"
                 />
             <corners
-                android:radius="@dimen/shared_corners"
+                android:bottomRightRadius="@dimen/shared_corners"
                 />
         </shape>
     </item>
+
 </layer-list>
