@@ -53,10 +53,18 @@ public class MainActivity extends AppCompatActivity {
             switch (message.what) {
                 case NAME_EMPTY: {
                     Toast.makeText(getApplicationContext(), R.string.NAME_EMPTY, Toast.LENGTH_SHORT).show();
+
+                    LinearLayout linearLayout = findViewById(R.id.loading);
+                    linearLayout.setVisibility(View.GONE);
+
                     break;
                 }
                 case PERSON_NOT_FOUND: {
                     Toast.makeText(getApplicationContext(), R.string.PERSON_NOT_FOUND, Toast.LENGTH_SHORT).show();
+
+                    LinearLayout linearLayout = findViewById(R.id.loading);
+                    linearLayout.setVisibility(View.GONE);
+
                     break;
                 }
                 case PERSON_OK: {
@@ -109,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 case FUNCTION_NOT_IMPLEMENTED: {
                     Toast.makeText(getApplicationContext(), R.string.FUNCTION_NOT_IMPLEMENTED, Toast.LENGTH_SHORT).show();
+                    LinearLayout linearLayout = findViewById(R.id.loading);
+                    linearLayout.setVisibility(View.GONE);
                     break;
                 }
             }

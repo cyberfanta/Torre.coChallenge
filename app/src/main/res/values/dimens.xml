@@ -34,6 +34,8 @@
     <!--    location-->
     <dimen name="location_height_1">50dp</dimen>
     <dimen name="location_width_1">111dp</dimen>
+    <dimen name="location_weight_1">.35</dimen>
+    <dimen name="location_weight_2">.65</dimen>
 
     <!--    loading-->
     <dimen name="loading_animation">1000</dimen>
