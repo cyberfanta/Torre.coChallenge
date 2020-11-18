@@ -26,5 +26,22 @@
     <string name="location_text_3">#City#</string>
     <string name="location_text_4">Timezone:</string>
     <string name="location_text_5">#Timezone#</string>
+    <string name="location_text_6">Latitud:</string>
+    <string name="location_text_7">#Latitud#</string>
+    <string name="location_text_8">Longitude:</string>
+    <string name="location_text_9">#Longitude#</string>
+
+    <!--    Author-->
+    <string name="author_name_1" translatable="false">Julio César Alberto</string>
+    <string name="author_name_2" translatable="false">León Anhuamán</string>
+    <string name="author_profession" translatable="false">Android Developer - UI/UX Designer</string>
+    <string name="author_email" translatable="false">julioleon2004@gmail.com</string>
+    <string name="author_phone" translatable="false">+58 (424) 225.92.20</string>
+
+    <!--    Menú-->
+    <string name="item_policy">Privacy Policy</string>
+    <string name="item_policy_url" translatable="false">https://docs.google.com/document/d/1jO9nnmsjG2ZO0Si1rEBTAP2kmTin5h-qIb4nhuAN5H0/edit?usp=sharing</string>
+    <string name="item_rate">Rate our app</string>
+    <string name="item_about">About</string>
 
 </resources>

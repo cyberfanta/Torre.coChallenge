@@ -1,5 +1,6 @@
 package com.cyberfanta.torrecochallenge;
 
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.cyberfanta.torrecochallenge.models.Links;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -58,12 +60,12 @@ public class ApiController {
         try {
             response = CLIENT.newCall(request).execute();
 
-            Log.i(null, response.toString());
+//            Log.i(null, response.toString());
 
             String responseJSON = Objects.requireNonNull(response.body()).string();
             Objects.requireNonNull(response.body()).close();
 
-            Log.i(null, responseJSON);
+//            Log.i(null, responseJSON);
 
             if (responseJSON.contains("\"code\":\"020000\""))
                 return MainActivity.NAME_EMPTY;
@@ -86,8 +88,8 @@ public class ApiController {
 
             //Object person
             persons = JSONtoClass(fields.elementAt(0).getValue().toString(), Persons.class);
-            Log.i(null, "original json: " + fields.elementAt(0).getValue().toString());
-            Log.i(null, "person: " + persons.toString());
+//            Log.i(null, "original json: " + fields.elementAt(0).getValue().toString());
+//            Log.i(null, "person: " + persons.toString());
 
             jsonNode = objectMapper.readTree(fields.elementAt(0).getValue().toString());
             fieldsIterator = jsonNode.fields();
@@ -103,10 +105,10 @@ public class ApiController {
             }
 
             Locations locations = JSONtoClass(persons_fields.elementAt(1).getValue().toString(), Locations.class);
-            Log.i(null, "locations: " + locations.toString());
+//            Log.i(null, "locations: " + locations.toString());
             persons.setLocations(locations);
 
-            Log.i(null, "persons_fields[0]: " + persons_fields.elementAt(0).getValue().toString().substring(1, persons_fields.elementAt(0).getValue().toString().length() - 1));
+//            Log.i(null, "persons_fields[0]: " + persons_fields.elementAt(0).getValue().toString().substring(1, persons_fields.elementAt(0).getValue().toString().length() - 1));
 
             String regex = "";
             regex = regex.concat("\\},\\{");
@@ -116,11 +118,18 @@ public class ApiController {
             responseJSONList[responseJSONList.length - 1] = responseJSONList[responseJSONList.length - 1].substring(0, responseJSONList[responseJSONList.length - 1].length() - 1);
 
             for (String field: responseJSONList) {
-                Log.i(null, "field: " + field);
+//                Log.i(null, "field: " + field);
                 Links links = JSONtoClass("{" + field + "}", Links.class);
                 persons.addLinks(links); //Json links parsing
-                Log.i(null, "links: " + links.toString());
+//                Log.i(null, "links: " + links.toString());
             }
+
+            URL url = new URL(persons.getPictureThumbnail());
+//            url.openConnection().setConnectTimeout(10);//10
+//            url.openConnection().setReadTimeout(15);//15
+
+            persons.setPictureThumbnailPhoto(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
+
 
         } catch (IOException ignored) {}
 

@@ -15,9 +15,26 @@
     <color name="gray_torre">#FF959698</color>
 
     <color name="soft_black_56">#99464B56</color>
+    <color name="soft_black_37">#cc464B56</color>
 
     <color name="colorPrimary">@color/soft_black</color>
     <color name="colorPrimaryDark">@color/black</color>
     <color name="colorAccent">@color/verde_torre</color>
+
+    <!--    Author-->
+    <color name="colorShadowGrayScale1">#40BEAC64</color>
+    <color name="colorShadowGrayScale2">#30C2B689</color>
+    <color name="colorShadowGrayScale3">#20C8C1A7</color>
+    <color name="colorShadowGrayScale4">#10D3D0C4</color>
+    <color name="shadow_0_color_buttom">@color/colorShadowGrayScale4</color>
+    <color name="shadow_1_color_buttom">@color/colorShadowGrayScale3</color>
+    <color name="shadow_2_color_buttom">@color/colorShadowGrayScale2</color>
+    <color name="shadow_3_color_buttom">@color/colorShadowGrayScale1</color>
+    <color name="color_background_button">@color/colorSourceBase</color>
+    <color name="colorSource4Down">#E5DBB2</color>
+    <color name="colorSourceBase">#E1CB74</color>
+    <color name="color_strokes">@color/colorSource4Up</color>
+    <color name="colorSource4Up">#BFA53F</color>
+
 
 </resources>

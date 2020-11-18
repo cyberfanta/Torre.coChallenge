@@ -1,5 +1,7 @@
 package com.cyberfanta.torrecochallenge.models;
 
+import android.graphics.Bitmap;
+
 import java.util.Vector;
 
 public class Persons {
@@ -16,6 +18,8 @@ public class Persons {
 
     private Locations locations;
     private Vector<Links> linkss;
+
+    private Bitmap pictureThumbnailPhoto;
 
     public Persons(String professionalHeadline, String verified, String subjectId, String picture, String name, String id, String pictureThumbnail, String summaryOfBio, String weightGraph, String publicId, Locations locations, Vector<Links> links) {
         this.professionalHeadline = professionalHeadline;
@@ -154,5 +158,12 @@ public class Persons {
         this.linkss.add(links);
     }
 
+    public Bitmap getPictureThumbnailPhoto() {
+        return pictureThumbnailPhoto;
+    }
+
+    public void setPictureThumbnailPhoto(Bitmap pictureThumbnailPhoto) {
+        this.pictureThumbnailPhoto = pictureThumbnailPhoto;
+    }
 }
 
