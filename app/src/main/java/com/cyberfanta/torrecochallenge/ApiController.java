@@ -1,5 +1,6 @@
 package com.cyberfanta.torrecochallenge;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class ApiController {
 //    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/$username";
 //    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/julioleon2004";
 
-    //    private static final String PAGE_URL_2 = "https://torre.co/api/opportunities/";
+//    private static final String PAGE_URL_2 = "https://torre.co/api/opportunities/";
 //    private static final String PAGE_URL_3 = "https://search.torre.co/opportunities/_search/";
 //    private static final String PAGE_URL_4 = "https://search.torre.co/people/_search/";
 
@@ -88,8 +90,8 @@ public class ApiController {
 
             //Object person
             persons = JSONtoClass(fields.elementAt(0).getValue().toString(), Persons.class);
-//            Log.i(null, "original json: " + fields.elementAt(0).getValue().toString());
-//            Log.i(null, "person: " + persons.toString());
+Log.i(null, "original json: " + fields.elementAt(0).getValue().toString());
+Log.i(null, "person: " + persons.toString());
 
             jsonNode = objectMapper.readTree(fields.elementAt(0).getValue().toString());
             fieldsIterator = jsonNode.fields();
@@ -97,7 +99,7 @@ public class ApiController {
 
             while (fieldsIterator.hasNext()) {
                 Map.Entry<String,JsonNode> field = fieldsIterator.next();
-//                Log.i(null, "Key: " + field.getKey() + "\tValue:" + field.getValue());
+Log.i(null, "Key: " + field.getKey() + "\tValue:" + field.getValue());
                 if (field.getKey().equals("links"))
                     persons_fields.add(field); //Json person Parsed
                 if (field.getKey().equals("location"))
@@ -105,10 +107,10 @@ public class ApiController {
             }
 
             Locations locations = JSONtoClass(persons_fields.elementAt(1).getValue().toString(), Locations.class);
-//            Log.i(null, "locations: " + locations.toString());
+Log.i(null, "locations: " + locations.toString());
             persons.setLocations(locations);
 
-//            Log.i(null, "persons_fields[0]: " + persons_fields.elementAt(0).getValue().toString().substring(1, persons_fields.elementAt(0).getValue().toString().length() - 1));
+Log.i(null, "persons_fields[0]: " + persons_fields.elementAt(0).getValue().toString().substring(1, persons_fields.elementAt(0).getValue().toString().length() - 1));
 
             String regex = "";
             regex = regex.concat("\\},\\{");
@@ -118,29 +120,30 @@ public class ApiController {
             responseJSONList[responseJSONList.length - 1] = responseJSONList[responseJSONList.length - 1].substring(0, responseJSONList[responseJSONList.length - 1].length() - 1);
 
             for (String field: responseJSONList) {
-//                Log.i(null, "field: " + field);
+Log.i(null, "field: " + field);
                 Links links = JSONtoClass("{" + field + "}", Links.class);
                 persons.addLinks(links); //Json links parsing
-//                Log.i(null, "links: " + links.toString());
+Log.i(null, "links: " + links.toString());
             }
-
-            URL url = new URL(persons.getPictureThumbnail());
-//            url.openConnection().setConnectTimeout(10);//10
-//            url.openConnection().setReadTimeout(15);//15
-
-            persons.setPictureThumbnailPhoto(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
-
-
         } catch (IOException ignored) {}
 
         return MainActivity.PERSON_OK;
     }
 
-    public Persons getPersons() {
-        return persons;
+    public int readImages() {
+        URL url;
+        try {
+            url = new URL(persons.getPictureThumbnail());
+//            url.openConnection().setConnectTimeout(10);//10
+//            url.openConnection().setReadTimeout(15);//15
+            persons.setPictureThumbnailPhoto(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
+        } catch (IOException e) {
+            return MainActivity.IMAGES_FAILED;
+        }
+        return MainActivity.IMAGES_OK;
     }
 
-    public void setPersons(Persons persons) {
-        this.persons = persons;
+    public Persons getPersons() {
+        return persons;
     }
 }

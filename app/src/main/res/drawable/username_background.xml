@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- shadow-->
+    <item android:top="3dp" android:left="3dp">
+        <shape>
+            <solid
+                android:color="@color/soft_black_56"
+                />
+            <corners
+                android:radius="@dimen/shared_corners"
+                />
+        </shape>
+    </item>
     <!-- Background -->
-    <item>
+    <item android:bottom="3dp" android:right="3dp">
         <shape>
             <solid
                 android:color="@color/soft_black"

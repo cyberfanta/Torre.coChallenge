@@ -31,15 +31,26 @@ public class MainActivity extends AppCompatActivity {
     public static final int PERSON_NOT_FOUND = 1;
     public static final int PERSON_OK = 2;
     public static final int FUNCTION_NOT_IMPLEMENTED = 3;
+    public static final int IMAGES_OK = 4;
+    public static final int IMAGES_FAILED = 5;
 
     private Thread QueryThread;
+    private Thread QueryThreadImages;
     private static String userName;
+    private Persons persons;
 
     private ApiController apiController;
 
     private String linkinURL = "";
     private String githubURL = "";
+    private String gitlabURL = "";
+    private String mediumURL = "";
     private String twitterURL = "";
+    private String facebookURL = "";
+    private String instagramURL = "";
+    private String webpageURL = "";
+
+    AnimatorSet loadingArrow_animatorSet_3;
 
     /**
      * perform the action in `handleMessage` when the thread calls
@@ -69,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 case PERSON_OK: {
                     Toast.makeText(getApplicationContext(), R.string.PERSON_OK, Toast.LENGTH_SHORT).show();
-                    Persons persons = apiController.getPersons();
+                    persons = apiController.getPersons();
 
                     LinearLayout linearLayout = findViewById(R.id.loading);
                     linearLayout.setVisibility(View.GONE);
@@ -88,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     textView = findViewById(R.id.city);
                     textView.setText(persons.getLocations().getName());
 
-                    textView = findViewById(R.id.timezone);
-                    textView.setText(persons.getLocations().getTimezone());
+                    textView = findViewById(R.id.country);
+                    textView.setText(persons.getLocations().getCountry());
 
                     textView = findViewById(R.id.latitude);
                     textView.setText(persons.getLocations().getLatitude());
@@ -97,21 +108,68 @@ public class MainActivity extends AppCompatActivity {
                     textView = findViewById(R.id.longitude);
                     textView.setText(persons.getLocations().getLongitude());
 
-                    githubURL = persons.getLinkss().elementAt(0).getAddress();
-                    twitterURL = persons.getLinkss().elementAt(1).getAddress();
-                    linkinURL = persons.getLinkss().elementAt(2).getAddress();
+                    textView = findViewById(R.id.timezone);
+                    textView.setText(persons.getLocations().getTimezone());
 
-                    ImageView imageView;
+                    for (int i=0; i<persons.getLinkss().size(); i++) {
+                        String name = persons.getLinkss().elementAt(i).getName();
+                        ImageView imageView;
 
-                    imageView = findViewById(R.id.usernamePhoto);
-                    imageView.setImageBitmap(persons.getPictureThumbnailPhoto());
+                        switch (name) {
+                            case "linkedin":
+                                linkinURL = persons.getLinkss().elementAt(i).getAddress();
+                                imageView = findViewById(R.id.linkin);
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_linkin_edited, null));
+                                break;
+                            case "github":
+                                githubURL = persons.getLinkss().elementAt(i).getAddress();
+                                imageView = findViewById(R.id.github);
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_github, null));
+                                break;
+                            case "gitlab":
+                                gitlabURL = persons.getLinkss().elementAt(i).getAddress();
+                                imageView = findViewById(R.id.gitlab);
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_gitlab3, null));
+                                break;
+                            case "medium":
+                                mediumURL = persons.getLinkss().elementAt(i).getAddress();
+                                imageView = findViewById(R.id.medium);
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_medium, null));
+                                break;
+                            case "twitter":
+                                twitterURL = persons.getLinkss().elementAt(i).getAddress();
+                                imageView = findViewById(R.id.twitter);
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_twitter, null));
+                                break;
+                            case "facebook":
+                                facebookURL = persons.getLinkss().elementAt(i).getAddress();
+                                imageView = findViewById(R.id.facebook);
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_facebook, null));
+                                break;
+                            case "instagram":
+                                instagramURL = persons.getLinkss().elementAt(i).getAddress();
+                                imageView = findViewById(R.id.instagram);
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_instagram, null));
+                                break;
+                            default:
+                                webpageURL = persons.getLinkss().elementAt(i).getAddress();
+                                imageView = findViewById(R.id.www);
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_www7, null));
+                                break;
+                        }
+                        imageView.setVisibility(View.VISIBLE);
+                    }
 
-                    imageView = findViewById(R.id.verified);
+                    ImageView imageView = findViewById(R.id.verified);
                     if (persons.getVerified().equals("true"))
                         imageView.setVisibility(View.VISIBLE);
                     else
                         imageView.setVisibility(View.GONE);
 
+                    if (!QueryThreadImages.isAlive()) {
+                        QueryThreadImages = new Thread(new readJsonImages());
+                        QueryThreadImages.start();
+                    }
 
                     break;
                 }
@@ -121,10 +179,28 @@ public class MainActivity extends AppCompatActivity {
                     linearLayout.setVisibility(View.GONE);
                     break;
                 }
+                case IMAGES_OK:{
+                    Toast.makeText(getApplicationContext(), R.string.IMAGES_OK, Toast.LENGTH_SHORT).show();
+
+                    loadingArrow_animatorSet_3.removeAllListeners();
+                    loadingArrow_animatorSet_3.end();
+
+                    ImageView imageView;
+
+                    imageView = findViewById(R.id.usernamePhoto);
+                    imageView.setImageBitmap(persons.getPictureThumbnailPhoto());
+
+                    break;
+                }
+                case IMAGES_FAILED:{
+                    Toast.makeText(getApplicationContext(), R.string.IMAGES_FAILED, Toast.LENGTH_SHORT).show();
+                    break;
+                }
             }
         }
     };
 
+//    ---
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,10 +210,11 @@ public class MainActivity extends AppCompatActivity {
         apiController = new ApiController();
 
         QueryThread = new Thread(new readJson());
+        QueryThreadImages = new Thread(new readJsonImages());
 
         ImageView imageView = findViewById(R.id.loadingImage);
 
-        ObjectAnimator loadingArrow_animator = ObjectAnimator.ofFloat(imageView, "rotation", 0, 360);
+        ObjectAnimator loadingArrow_animator = ObjectAnimator.ofFloat(imageView, "rotation", 0, -360);
         AnimatorSet loadingArrow_animatorSet = new AnimatorSet();
         loadingArrow_animatorSet.play(loadingArrow_animator);
         loadingArrow_animatorSet.setDuration((int) ResourcesCompat.getFloat(getResources(), R.dimen.loading_animation));
@@ -169,9 +246,28 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
         loadingArrow_animatorSet2.start();
+
+        ImageView imageView3 = findViewById(R.id.usernamePhoto);
+
+        ObjectAnimator loadingArrow_animator_3 = ObjectAnimator.ofFloat(imageView3, "rotation", 0, -360);
+        loadingArrow_animatorSet_3 = new AnimatorSet();
+        loadingArrow_animatorSet_3.play(loadingArrow_animator_3);
+        loadingArrow_animatorSet_3.setDuration((int) ResourcesCompat.getFloat(getResources(), R.dimen.loading_animation));
+        loadingArrow_animatorSet_3.addListener(
+                new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        loadingArrow_animatorSet_3.start();
+                    }
+                }
+        );
+        loadingArrow_animatorSet_3.start();
     }
 
-    public void click_1(View view) {
+//    ---
+
+    public void click_search(View view) {
         LinearLayout linearLayout = findViewById(R.id.loading);
         linearLayout.setVisibility(View.VISIBLE);
 
@@ -185,7 +281,45 @@ public class MainActivity extends AppCompatActivity {
             QueryThread.start();
         }
 
+        {
+            ImageView imageView = findViewById(R.id.linkin);
+            imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_linkin_edited2, null));
+            imageView.setVisibility(View.GONE);
+
+            imageView = findViewById(R.id.github);
+            imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_github2, null));
+            imageView.setVisibility(View.GONE);
+
+            imageView = findViewById(R.id.gitlab);
+            imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_gitlab4, null));
+            imageView.setVisibility(View.GONE);
+
+            imageView = findViewById(R.id.medium);
+            imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_medium2, null));
+            imageView.setVisibility(View.GONE);
+
+            imageView = findViewById(R.id.twitter);
+            imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_twitter2, null));
+            imageView.setVisibility(View.GONE);
+
+            imageView = findViewById(R.id.facebook);
+            imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_facebook2, null));
+            imageView.setVisibility(View.GONE);
+
+            imageView = findViewById(R.id.instagram);
+            imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_instagram2, null));
+            imageView.setVisibility(View.GONE);
+
+            imageView = findViewById(R.id.www);
+            imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_www8, null));
+            imageView.setVisibility(View.GONE);
+
+            imageView = findViewById(R.id.verified);
+            imageView.setVisibility(View.GONE);
+        }
     }
+
+//    ---
 
     public void click_linkinURL(View view) {
         if (!linkinURL.isEmpty()) {
@@ -201,12 +335,49 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void click_gitlabURL(View view) {
+        if (!gitlabURL.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(gitlabURL));
+            startActivity(intent);
+        }
+    }
+
+    public void click_mediumURL(View view) {
+        if (!mediumURL.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mediumURL));
+            startActivity(intent);
+        }
+    }
+
     public void click_twitterURL(View view) {
         if (!twitterURL.isEmpty()) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterURL));
             startActivity(intent);
         }
     }
+
+    public void click_facebookURL(View view) {
+        if (!facebookURL.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(facebookURL));
+            startActivity(intent);
+        }
+    }
+
+    public void click_instagramURL(View view) {
+        if (!instagramURL.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagramURL));
+            startActivity(intent);
+        }
+    }
+
+    public void click_webpageURL(View view) {
+        if (!webpageURL.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webpageURL));
+            startActivity(intent);
+        }
+    }
+
+//    ---
 
     /**
      *  Create the setting menu of the application
@@ -248,6 +419,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    ---
 
     /**
      * Show the developer info
@@ -257,6 +429,7 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.setVisibility(View.GONE);
     }
 
+//    ---
 
     /**
      * Internal class to implement a runnable object to get the JSON answers from torre.co
@@ -292,5 +465,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Internal class to implement a runnable object to get the JSON images from torre.co
+     */
+    private class readJsonImages implements Runnable {
+        /**
+         * When an object implementing interface <code>Runnable</code> is used
+         * to create a thread, starting the thread causes the object's
+         * <code>run</code> method to be called in that separately executing
+         * thread.
+         * <p>
+         * The general contract of the method <code>run</code> is that it may
+         * take any action whatsoever.
+         *
+         * @see Thread#run()
+         */
+        @Override
+        public void run() {
+            int status = apiController.readImages();
+
+            Message message = handler.obtainMessage();
+
+            if (status == IMAGES_OK) {
+                message.what = IMAGES_OK;
+            } else if (status == IMAGES_FAILED) {
+                message.what = IMAGES_FAILED;
+            } else
+                message.what = FUNCTION_NOT_IMPLEMENTED;
+
+            handler.sendMessageAtFrontOfQueue(message);
+        }
+    }
 
 }

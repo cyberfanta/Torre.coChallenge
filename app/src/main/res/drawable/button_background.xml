@@ -1,36 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Shadow -->
-    <item android:left="5dp" android:top="5dp">
+<!--    <item android:left="6dp" android:top="6dp">-->
+<!--        <shape>-->
+<!--            <corners android:radius="@dimen/shared_corners" />-->
+<!--            <solid android:color="@color/soft_black_56" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item android:bottom="3dp" android:right="3dp">-->
+<!--        <shape>-->
+<!--            <gradient android:angle="270"-->
+<!--                android:endColor="#E2E2E2" android:startColor="#BABABA" />-->
+<!--            <stroke-->
+<!--                android:width="@dimen/button_stroke"-->
+<!--                android:color="@color/verde_torre"-->
+<!--                />-->
+<!--            <corners-->
+<!--                android:radius="@dimen/shared_corners"-->
+<!--                />-->
+<!--            <padding android:bottom="3dp" android:left="1dp"-->
+<!--                android:right="3dp" android:top="1dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+    <!-- Shadow -->
+    <item android:top="3dp" android:left="3dp">
         <shape>
-            <corners android:radius="@dimen/shared_corners" />
-            <solid android:color="@color/soft_black_56" />
-        </shape>
-    </item>
-    <item android:bottom="2dp" android:right="2dp">
-        <shape>
-            <gradient android:angle="270"
-                android:endColor="#E2E2E2" android:startColor="#BABABA" />
-            <stroke
-                android:width="@dimen/button_stroke"
-                android:color="@color/verde_torre"
-                />
             <corners
                 android:radius="@dimen/shared_corners"
                 />
-            <padding android:bottom="3dp" android:left="1dp"
-                android:right="3dp" android:top="1dp" />
+            <solid
+                android:color="@color/soft_black_56"
+                />
         </shape>
     </item>
 
     <!-- Background -->
-    <item>
+    <item android:bottom="3dp" android:right="3dp">
         <shape>
             <solid
                 android:color="@color/soft_black"
                 />
             <corners
                 android:radius="@dimen/shared_corners"
+                />
+            <stroke
+                android:width="@dimen/button_stroke"
+                android:color="@color/verde_torre"
                 />
         </shape>
     </item>

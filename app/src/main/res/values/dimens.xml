@@ -2,6 +2,7 @@
 <resources>
     <!--    shared-->
     <dimen name="shared_margin">20dp</dimen>
+    <dimen name="shared_margin2">10dp</dimen>
     <dimen name="shared_corners">10dp</dimen>
 
     <!--    button-->
@@ -19,6 +20,7 @@
     <dimen name="username_width">371dp</dimen>
     <dimen name="username_height">130dp</dimen>
     <dimen name="username_padding">10dp</dimen>
+    <dimen name="username_padding_2">5dp</dimen>
 
     <dimen name="username_picture_width">.31</dimen>
     <dimen name="username_text_width">.69</dimen>
@@ -26,7 +28,8 @@
     <dimen name="username_text_height_1">28dp</dimen>
     <dimen name="username_text_height_2">40dp</dimen>
 
-    <dimen name="username_social_width">25dp</dimen>
+    <dimen name="username_social_width">20dp</dimen>
+    <dimen name="username_social_width_2">20dp</dimen>
 
     <!--    objective-->
     <dimen name="objective_height_1">50dp</dimen>

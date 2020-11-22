@@ -7,6 +7,8 @@
     <string name="PERSON_NOT_FOUND">Username not found</string>
     <string name="PERSON_OK">Username info updated</string>
     <string name="FUNCTION_NOT_IMPLEMENTED">Function still not implemented</string>
+    <string name="IMAGES_OK">All images loaded</string>
+    <string name="IMAGES_FAILED">Failed loading images</string>
 
     <!--    button-->
     <string name="button_text">Search</string>
@@ -22,8 +24,10 @@
 
     <!--    location-->
     <string name="location_text_1">Location</string>
-    <string name="location_text_2">City:</string>
-    <string name="location_text_3">#City#</string>
+    <string name="location_text_2a">Country:</string>
+    <string name="location_text_3a">#Country#</string>
+    <string name="location_text_2b">City:</string>
+    <string name="location_text_3b">#City#</string>
     <string name="location_text_4">Timezone:</string>
     <string name="location_text_5">#Timezone#</string>
     <string name="location_text_6">Latitud:</string>
