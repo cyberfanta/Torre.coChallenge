@@ -16,12 +16,16 @@ public class Persons {
     private String weightGraph;
     private String publicId;
 
+    private String showPhone;
+    private String phone;
+
     private Locations locations;
     private Vector<Links> linkss;
 
+    private Bitmap picturePhoto;
     private Bitmap pictureThumbnailPhoto;
 
-    public Persons(String professionalHeadline, String verified, String subjectId, String picture, String name, String id, String pictureThumbnail, String summaryOfBio, String weightGraph, String publicId, Locations locations, Vector<Links> links) {
+    public Persons(String professionalHeadline, String verified, String subjectId, String picture, String name, String id, String pictureThumbnail, String summaryOfBio, String weightGraph, String publicId, String showPhone, String phone, Locations locations, Vector<Links> linkss, Bitmap picturePhoto, Bitmap pictureThumbnailPhoto) {
         this.professionalHeadline = professionalHeadline;
         this.verified = verified;
         this.subjectId = subjectId;
@@ -32,8 +36,12 @@ public class Persons {
         this.summaryOfBio = summaryOfBio;
         this.weightGraph = weightGraph;
         this.publicId = publicId;
+        this.showPhone = showPhone;
+        this.phone = phone;
         this.locations = locations;
-        this.linkss = links;
+        this.linkss = linkss;
+        this.picturePhoto = picturePhoto;
+        this.pictureThumbnailPhoto = pictureThumbnailPhoto;
     }
 
     public Persons() {
@@ -53,8 +61,12 @@ public class Persons {
                 ", summaryOfBio='" + summaryOfBio + '\'' +
                 ", weightGraph='" + weightGraph + '\'' +
                 ", publicId='" + publicId + '\'' +
+                ", showPhone='" + showPhone + '\'' +
+                ", phone='" + phone + '\'' +
                 ", locations=" + locations +
                 ", linkss=" + linkss +
+                ", picturePhoto=" + picturePhoto +
+                ", pictureThumbnailPhoto=" + pictureThumbnailPhoto +
                 '}';
     }
 
@@ -158,12 +170,36 @@ public class Persons {
         this.linkss.add(links);
     }
 
+    public Bitmap getPicturePhoto() {
+        return picturePhoto;
+    }
+
+    public void setPicturePhoto(Bitmap picturePhoto) {
+        this.picturePhoto = picturePhoto;
+    }
+
     public Bitmap getPictureThumbnailPhoto() {
         return pictureThumbnailPhoto;
     }
 
     public void setPictureThumbnailPhoto(Bitmap pictureThumbnailPhoto) {
         this.pictureThumbnailPhoto = pictureThumbnailPhoto;
+    }
+
+    public String getShowPhone() {
+        return showPhone;
+    }
+
+    public void setShowPhone(String showPhone) {
+        this.showPhone = showPhone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
 

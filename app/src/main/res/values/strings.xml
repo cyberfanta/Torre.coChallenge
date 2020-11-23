@@ -5,22 +5,37 @@
 
     <string name="NAME_EMPTY">Username can not be empty</string>
     <string name="PERSON_NOT_FOUND">Username not found</string>
-    <string name="PERSON_OK">Username info updated</string>
+    <string name="PERSON_LOAD_OK">Username info updated</string>
+    <string name="PERSON_LOAD_FAIL">Connection failed</string>
     <string name="FUNCTION_NOT_IMPLEMENTED">Function still not implemented</string>
     <string name="IMAGES_OK">All images loaded</string>
-    <string name="IMAGES_FAILED">Failed loading images</string>
+    <string name="IMAGES_FAILED">Fail loading images</string>
+
+<!--    -&#45;&#45;-->
+
+    <!--    username-->
+    <string name="username_text_1">#Name#</string>
+    <string name="username_text_2">#Carrer#</string>
+    <string name="username_text_3">#Telephone#</string>
 
     <!--    button-->
     <string name="button_text">Search</string>
     <string name="button_hint">Write a username here</string>
 
-    <!--    username-->
-    <string name="username_text_1">#Name#</string>
-    <string name="username_text_2">#Carrer#</string>
+<!--    recent-->
+    <string name="recent_text_1">julioleon2004</string>
+    <string name="recent_text_2">taniazapata</string>
+    <string name="recent_text_3">juansortega</string>
+    <string name="recent_text_4">luisbetancourt</string>
+    <string name="recent_text_5">scherb</string>
+
+<!--    -&#45;&#45;-->
 
     <!--    objective-->
     <string name="objective_text_1">Personal Objective</string>
     <string name="objective_text_2">#Personal Objective#</string>
+
+<!--    -&#45;&#45;-->
 
     <!--    location-->
     <string name="location_text_1">Location</string>
@@ -34,6 +49,8 @@
     <string name="location_text_7">#Latitud#</string>
     <string name="location_text_8">Longitude:</string>
     <string name="location_text_9">#Longitude#</string>
+
+<!--    -&#45;&#45;-->
 
     <!--    Author-->
     <string name="author_name_1" translatable="false">Julio César Alberto</string>

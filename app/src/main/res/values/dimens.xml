@@ -9,7 +9,7 @@
     <dimen name="button_width">90dp</dimen>
     <dimen name="button_height">32dp</dimen>
     <dimen name="button_stroke">1dp</dimen>
-    <dimen name="button_weight">.22</dimen>
+    <dimen name="button_weight">.32</dimen>
 
     <!--    textedit-->
     <dimen name="textedit_width">281dp</dimen>
@@ -25,8 +25,10 @@
     <dimen name="username_picture_width">.31</dimen>
     <dimen name="username_text_width">.69</dimen>
 
-    <dimen name="username_text_height_1">28dp</dimen>
-    <dimen name="username_text_height_2">40dp</dimen>
+    <dimen name="username_text_height_1">40dp</dimen>
+    <dimen name="username_text_height_2">28dp</dimen>
+
+    <dimen name="username_text_padding">2dp</dimen>
 
     <dimen name="username_social_width">20dp</dimen>
     <dimen name="username_social_width_2">20dp</dimen>

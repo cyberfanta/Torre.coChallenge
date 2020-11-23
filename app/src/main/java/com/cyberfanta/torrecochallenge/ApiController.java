@@ -1,6 +1,5 @@
 package com.cyberfanta.torrecochallenge;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
@@ -12,7 +11,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,10 +22,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.cyberfanta.torrecochallenge.ProjectUtils.JSONExtractJsonElement;
+import static com.cyberfanta.torrecochallenge.SharedConstants.*;
 import static com.cyberfanta.torrecochallenge.ProjectUtils.JSONtoClass;
 
 public class ApiController {
+
+    /**
+     * Objects to read data from server
+     */
     private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
@@ -36,20 +38,25 @@ public class ApiController {
     private static Request request;
     private static Response response;
 
+    /**
+     * Links to server API
+     */
     private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/";
-//    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/$username";
-//    private static final String PAGE_URL_1 = "https://bio.torre.co/api/bios/julioleon2004";
-
 //    private static final String PAGE_URL_2 = "https://torre.co/api/opportunities/";
 //    private static final String PAGE_URL_3 = "https://search.torre.co/opportunities/_search/";
 //    private static final String PAGE_URL_4 = "https://search.torre.co/people/_search/";
 
+    /**
+     * Object to store the data readed from server
+     */
     private Persons persons;
 
     /**
-     * Get the Pet Data from Internet and add it to a Pet List.
+     * Get the Data from Internet and add it to a Person object.
+     * @param name Person.name
+     * @return SharedConstants with reading statu
      */
-    public int getInfo_bios(String name) {
+    public SharedConstants getInfo_bios(String name) {
         persons = null;
         System.gc();
 
@@ -62,18 +69,18 @@ public class ApiController {
         try {
             response = CLIENT.newCall(request).execute();
 
-//            Log.i(null, response.toString());
+Log.i(null, response.toString());
 
             String responseJSON = Objects.requireNonNull(response.body()).string();
             Objects.requireNonNull(response.body()).close();
 
-//            Log.i(null, responseJSON);
+Log.i(null, responseJSON);
 
             if (responseJSON.contains("\"code\":\"020000\""))
-                return MainActivity.NAME_EMPTY;
+                return NAME_EMPTY;
 
             if (responseJSON.contains("\"code\":\"011002\""))
-                return MainActivity.PERSON_NOT_FOUND;
+                return PERSON_NOT_FOUND;
 
             //Json Root
             JsonFactory factory = new JsonFactory();
@@ -125,24 +132,38 @@ Log.i(null, "field: " + field);
                 persons.addLinks(links); //Json links parsing
 Log.i(null, "links: " + links.toString());
             }
-        } catch (IOException ignored) {}
-
-        return MainActivity.PERSON_OK;
+        } catch (IOException e) {
+            return PERSON_LOAD_FAIL;
+        }
+        return PERSON_LOAD_OK;
     }
 
-    public int readImages() {
+    /**
+     * Read all images from server
+     * @return SharedConstants with reading status
+     */
+    public SharedConstants readImages() {
         URL url;
         try {
             url = new URL(persons.getPictureThumbnail());
 //            url.openConnection().setConnectTimeout(10);//10
 //            url.openConnection().setReadTimeout(15);//15
             persons.setPictureThumbnailPhoto(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
+
+            url = new URL(persons.getPicture());
+//            url.openConnection().setConnectTimeout(10);//10
+//            url.openConnection().setReadTimeout(15);//15
+            persons.setPicturePhoto(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
         } catch (IOException e) {
-            return MainActivity.IMAGES_FAILED;
+            return IMAGES_FAILED;
         }
-        return MainActivity.IMAGES_OK;
+        return IMAGES_OK;
     }
 
+    /**
+     * Return the object with all data readed from server
+     * @return Persons Objects
+     */
     public Persons getPersons() {
         return persons;
     }
